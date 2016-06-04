@@ -23,7 +23,7 @@
 			'B': 71
 		},
 
-		context: new webkitAudioContext(),
+		context: new AudioContext(),
 
 		attack: 0,
 		decay: 20,

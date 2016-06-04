@@ -3,6 +3,7 @@ body {
 	padding: 0;
     background: #262626;
     -webkit-user-select: none;
+    -moz-user-select: none;
 }
 
 #tonematrix {
@@ -19,7 +20,7 @@ input[type=radio] {
 .note {
     position: absolute;
     background: #999;
-    -webkit-transition: 0.5s;
+    transition: 0.5s;
 }
 .note.active {
     background: #262626;
@@ -27,20 +28,20 @@ input[type=radio] {
 .note.hit {
     pointer-events:none;
     z-index: 5;
-    -webkit-animation: hit 0.3s ease-in-out;
+    animation: hit 0.3s ease-in-out;
 }
 
-@-webkit-keyframes hit {
+@keyframes hit {
     from {
         background: rgba(255,255,255,0.5);
         opacity: 1;
         border-radius: 50%;
-        -webkit-transform: scale3d(1,1,1);
+        transform: scale3d(1,1,1);
     }
     to {
         background: rgba(255,255,255,0.5);
         opacity: 0.0;
         border-radius: 50%;
-        -webkit-transform: scale3d(5,5,1);
+        transform: scale3d(5,5,1);
     }
 }

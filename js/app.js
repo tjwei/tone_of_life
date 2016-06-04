@@ -1,4 +1,4 @@
-if (!window.webkitAudioContext)
+if (!window.AudioContext)
 {
 	alert('No WebAudio support');
 }

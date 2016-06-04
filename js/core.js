@@ -5,16 +5,17 @@
 	{
 
 		BPM: 120,
-		ROWS: 11,
+		ROWS: 16,
 		COLUMNS: 16,
 		NOTESIZE: 50,
 		currentScale: 'Pentatonic',
 		SCALES: {
-			Pentatonic: ['C6', 'A5', 'G5', 'E5', 'D5', 'C5', 'A4', 'G4', 'E4', 'D4', 'C4', 'A3'],
-			Minor: ['D5', 'C5', 'B4', 'A4', 'G4', 'F4', 'E4', 'D4', 'C4', 'B3', 'A3']
+			Pentatonic: ['E6', 'D6', 'C6', 'A5', 'G5', 'E5', 'D5', 'C5', 'A4', 'G4', 'E4', 'D4', 'C4', 'A3', 'G3', 'E3', 'D3'],
+			Minor: ['F5','E5','D5', 'C5', 'B4', 'A4', 'G4', 'F4', 'E4', 'D4', 'C4', 'B3', 'A3', 'G3', 'F3', 'E3']
 		},
 
 		grid: [],
+                elem: [],
 		noteIndex: 0,
 
 		constructor: function (opts)
@@ -68,6 +69,9 @@
 				this.grid[row][column] = +!note;
 				e.target.classList[action]('active');
 			}
+			else{
+                            console.log("tonematrix");
+                        }
 		},
 
 		handleEvent: function (e)
@@ -94,9 +98,46 @@
 				localStorage.setItem('notes', tm.encode(this.grid));
 			}
 		},
+                gameLoop: function()
+                {
+                    var g = [];
+                    for(var i=0;i<this.grid.length;i++){
+                        g[i]=[];
+                        for(var j=0;j<this.COLUMNS;j++) {
+                            var c = 0;
+                             if(j+1<this.COLUMNS){
+                                 if(this.grid[i][j+1]==1) c++;
+                                 if(i>0 && this.grid[i-1][j+1]==1) c++;
+                                 if(i+1<this.grid.length && this.grid[i+1][j+1]==1) c++;
+                             }
+                            if(i>0 && this.grid[i-1][j]==1) c++;
+                            if(i+1<this.grid.length &&  this.grid[i+1][j]==1) c++;
+                            if(j >0 ){
+                                 if(this.grid[i][j-1]==1) c++;
+                                 if(i>0 && this.grid[i-1][j-1]==1) c++;
+                                 if(i+1<this.grid.length && this.grid[i+1][j-1]==1) c++;
+                             }
+                            var r = this.grid[i][j];
+                            if(this.grid[i][j]==1 && c<2) r=0;
+                            if(this.grid[i][j]==1 && c>3) r=0;
+                            if(this.grid[i][j]==0 && c==3) r=1;
+                            g[i].push(r);
+                        }
+                    }
+                    for(var i=0;i<this.grid.length;i++){
+                        for(var j=0;j<this.COLUMNS;j++) {
+                            if(g[i][j]!=this.grid[i][j])
+                                this.toggleNote( {target: this.elem[i][j]} );
+                        }
+                    }
+                    
+                    
+                            
+                },
 
 		audioLoop: function ()
 		{
+                       
 			var currentTime = this.Synth.context.currentTime - this.startTime;
 
 			for (var i = 0; i < this.grid.length; i++)
@@ -112,7 +153,10 @@
 			if (this.noteIndex === this.COLUMNS)
 			{
 				this.noteIndex = 0;
+                                if(document.getElementById('game').checked)
+                                        this.gameLoop();
 			}
+			
 		},
 
 		hitNote: function (note)
@@ -134,6 +178,7 @@
 			for (; i < this.ROWS; i++)
 			{
 				this.grid[i] = [];
+                                this.elem[i]=[];
 				for (j = 0; j < this.COLUMNS; j++)
 				{
 					this.grid[i].push(0);
@@ -144,6 +189,7 @@
 					note.setAttribute('data-row', i);
 					note.setAttribute('data-column', j);
 					note.classList.add('note');
+                                        this.elem[i].push(note);
 
 					tm.$('tonematrix').appendChild(note);
 

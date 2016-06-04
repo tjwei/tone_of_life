@@ -5,18 +5,19 @@
 	{
 		constructor: function (opts)
 		{
+                        
 			tm.extend(this, opts);
 
 			this.osc = this.context.createOscillator();
+                        var now = this.context.currentTime;
 			this.envelope = this.context.createGain();
 
 			this.osc.connect(this.envelope);
 			this.envelope.connect(tm.Synth.master);
 
 			// this.osc.type = this.osc.TRIANGLE
-			this.osc.frequency.setValueAtTime(this.note, 0);
-
-
+                        this.osc.type = "sine"
+			this.osc.frequency.setValueAtTime(this.note, now);
 			this.setEnvelope();
 			this.osc.start(0);
 		},
