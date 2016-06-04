@@ -1,7 +1,17 @@
+# Game of life mashup with ToneMatrix
+based on ToneMatrix (see below)
+Currently, only works on chrome.
+## Usage:
+
+http://tjwei.github.io/tone_of_life
+
+check the checkbox at right to run the game of life
+
+
+
 # ToneMatrix
 ==========
 http://carlbarrdahl.se/tm/
-
 
 ### Changelog
 ##### May 6 2013
