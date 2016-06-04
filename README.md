@@ -2,10 +2,9 @@
 based on ToneMatrix (see below)
 Currently, only works on chrome.
 ## Usage:
+online Demo: http://tjwei.github.io/tone_of_life
 
-http://tjwei.github.io/tone_of_life
-
-check the checkbox at right to run the game of life
+Click on cells to toggle cells.  Check the checkbox at right to start the game of life. 
 
 
 
